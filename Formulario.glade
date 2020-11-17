@@ -1,15 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.36.0 -->
+<!-- Generated with glade 3.22.1 -->
 <interface>
   <requires lib="gtk+" version="3.22"/>
-  <object class="GtkWindow">
+  <object class="GtkWindow" id="winSaludo">
     <property name="can_focus">False</property>
+    <signal name="delete-event" handler="on_winSaludo_delete_event" swapped="no"/>
+    <child type="titlebar">
+      <placeholder/>
+    </child>
     <child>
-      <object class="GtkBox" id="winSaludo">
+      <object class="GtkBox" id="boxWindow">
+        <property name="name">boxWindow</property>
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="orientation">vertical</property>
-        <signal name="delete-event" handler="on_winSaludo_delete_event" swapped="no"/>
         <child>
           <object class="GtkLabel" id="lblSaludo">
             <property name="visible">True</property>
@@ -50,9 +54,6 @@
           </packing>
         </child>
       </object>
-    </child>
-    <child type="titlebar">
-      <placeholder/>
     </child>
   </object>
 </interface>
