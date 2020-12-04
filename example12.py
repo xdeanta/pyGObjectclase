@@ -31,7 +31,7 @@ class EjemploGtkHeaderBar(Gtk.Window):
         cajaV.pack_start(etiqueta2, True, True, 0)
 
         interruptor = Gtk.Switch()
-        interruptor.props.valing = Gtk.Align.CENTER
+        interruptor.props.valign = Gtk.Align.CENTER
         cajaH.pack_start(interruptor, False, True, 0)
 
         listbox.add(row)
