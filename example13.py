@@ -21,6 +21,22 @@ class EjemploComboBox(Gtk.Window):
         cmbNombres.set_entry_text_column(1)
         cajaV.pack_start(cmbNombres, False, False,0)
 
+        txtNombre = cmbNombres.get_child()
+        txtNombre.connect("activate", self.on_txtNombres_activated, lstNombres, cmbNombres)
+
+        modelo_frutas = Gtk.ListStore(str)
+        frutas= ["Manzana", "Pera", "Uva", "Melon", "Piña"]
+
+        for fruta in frutas:
+            modelo_frutas.append([fruta])
+
+        cmbFrutas = Gtk.ComboBox.new_with_model(modelo_frutas)
+        cmbFrutas.connect("changed", self.on_cmbFrutas_changed)
+        renderer_text = Gtk.CellRendererText()
+        cmbFrutas.pack_start(renderer_text,True)
+        cmbFrutas.add_attribute(renderer_text,"text", 0)
+        cajaV.pack_start(cmbFrutas, False, False, 0)
+
         self.add(cajaV)
 
         self.connect("delete-event", Gtk.main_quit)
@@ -35,6 +51,18 @@ class EjemploComboBox(Gtk.Window):
         else:
             txtNombre= combo.get_child()
             print("Escrito: %s" % txtNombre.get_text())
+
+    def on_txtNombres_activated(self, control, listaNombres):
+        nombre= control.get_text()
+        listaNombres.append([99,nombre])
+        control.set_text("")
+
+    def on_cmbFrutas_changed(self, combo):
+        fila=combo.get_active_iter()
+        if fila is not None:
+            modelo = combo.get_model()
+            fruta = modelo[fila][0]
+            print("La fruta elegida es: %s" % fruta)
 
 if __name__ == "__main__":
     EjemploComboBox()
