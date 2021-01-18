@@ -25,8 +25,11 @@ class EjemploGtkTreeViewTelefonos(Gtk.Window):
         for columna in columnas:
             celdaRenderer = Gtk.CellRendererText()
             col = Gtk.TreeViewColumn(columna, celdaRenderer, text=i)
+            col.set_sort_column_id(i)
             tablaAgenda.append_column(col)
             i = i + 1
+
+        tablaAgenda.set_reorderable(True)
 
         self.add(tablaAgenda)
 
