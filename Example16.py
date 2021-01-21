@@ -17,6 +17,9 @@ class EjemploGtkTreeViewToggle(Gtk.Window):
         vista = Gtk.TreeView(model = modelo)
 
         cellRenderderText = Gtk.CellRendererText()
+        #permite editar el modelo y detectar cuando se edita
+        cellRenderderText.props.editable = True
+        cellRenderderText.connect("edited", self.on_celdaTexto_edited, modelo)
 
         trcColumna = Gtk.TreeViewColumn("Tipo Conexion")
         trcColumna.pack_start(cellRenderderText,False)
@@ -38,8 +41,11 @@ class EjemploGtkTreeViewToggle(Gtk.Window):
         self.show_all()
 
     def on_celda_toggled(self, celda, fila, modelo):
+        modelo[fila][1] = not modelo [fila] [1] #asi activa y deactiva el checkbox
         print("usuario hizo click")
 
+    def on_celdaTexto_edited(self,celda, fila, texto, modelo): #recibe el texto de la edicion y modifica el modelo
+        modelo [fila][0] = texto
 
 if __name__ == "__main__":
     EjemploGtkTreeViewToggle()
