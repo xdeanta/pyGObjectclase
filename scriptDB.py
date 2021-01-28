@@ -27,7 +27,7 @@ try:
                                                nome text,
                                                direccion text,
                                                edad number,
-                                               sexo, text)""")
+                                               sexo text)""")
 
     cursor.execute ("""insert into usuarios
                       values ('3333-A', 'Maria', 'Canceleiro', 24, 'Mujer')""")

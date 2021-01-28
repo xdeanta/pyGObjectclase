@@ -44,20 +44,6 @@ except dbapi.DatabaseError as e:
 else:
     print("Consulta executada")
 
-
-dni = input ("Introduce o dni")
-
-try:
-    consulta = "select * from usuarios where dni = ?"
-    print (consulta)
-    cursor.execute(consulta, (dni,))
-    for rexistro in cursor.fetchall():
-        print (rexistro)
-
-except dbapi.DatabaseError as e:
-    print("Erro facendo a consulta: " + str(e))
-else:
-    print("Consulta executada")
 finally:
     cursor.close()
     bbdd.close()
