@@ -128,6 +128,25 @@ class EjemploGtkTreeViewBD(Gtk.Window):
             modelo[fila][3] = int(self.txtEdad.get_text())
             modelo[fila][4] = self.cmbSexo.get_active_text()
 
+        try:
+            bbdd = dbapi.connect("baseDatosTreeView.dat")
+        except dbapi.DatabaseError as e:
+            print(e)
+        else:
+            print("conexion abierta")
+        try:
+            cursor = bbdd.cursor()
+            cursor.execute("UPDATE usuarios SET nome = ?, direccion = ?, edad = ?, sexo =? WHERE dni = ?", ())
+            for fila in cursor.fetchall():
+                modelo.append(fila)
+        except dbapi.DatabaseError as e:
+            print(e)
+        else:
+            print("Consulta ejecutada")
+        finally:
+            cursor.close()
+            bbdd.close()
+
 if __name__ == "__main__":
     EjemploGtkTreeViewBD()
 
