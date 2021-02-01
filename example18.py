@@ -21,6 +21,7 @@ class EjemploGtkTreeViewBD(Gtk.Window):
             cursor = bbdd.cursor()
             cursor.execute("select * from usuarios")
             for fila in cursor.fetchall():
+                print(fila)
                 modelo.append(fila)
         except dbapi.DatabaseError as e:
             print(e)
@@ -81,8 +82,11 @@ class EjemploGtkTreeViewBD(Gtk.Window):
 
         caixaH = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=4)
         self.btnModificar = Gtk.Button(label = "Modificar")
+        self.btnAnadir = Gtk.Button(label="Añadir")
         self.btnModificar.connect("clicked" , self.on_btnModificar_clicked, seleccion)
-        caixaH.pack_start(self.btnModificar, True, True, 2)
+        self.btnAnadir.connect("clicked", self.on_btnAnadir_clicked, modelo)
+        caixaH.pack_start(self.btnModificar, False, False, 2)
+        caixaH.pack_start(self.btnAnadir, False, False, 2)
         cajaV.pack_start(caixaH, True, False, 2)
 
 
@@ -146,6 +150,28 @@ class EjemploGtkTreeViewBD(Gtk.Window):
         finally:
             cursor.close()
             bbdd.close()
+
+    def on_btnAnadir_clicked(self, boton, modelo):
+        entry = [self.txtDni.get_text(), self.txtNombre.get_text(), self.txtDireccion.get_text(), int(self.txtEdad.get_text()), self.cmbSexo.get_active_text()]
+        modelo.append(entry)
+        try:
+            bbdd = dbapi.connect("baseDatosTreeView.dat");
+        except dbapi.DatabaseError as e:
+            print(e)
+        else:
+            print("conexion abierta")
+        try:
+            cursor = bbdd.cursor()
+            cursor.execute("INSERT INTO usuarios values (?,?,?,?,?)", entry)
+            bbdd.commit()
+        except dbapi.DatabaseError as e:
+            print(e)
+        else:
+            print("dato insertado")
+        finally:
+            cursor.close()
+            bbdd.close()
+        """Algo"""
 
 if __name__ == "__main__":
     EjemploGtkTreeViewBD()
